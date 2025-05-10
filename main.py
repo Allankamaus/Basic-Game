@@ -1,11 +1,9 @@
 import pygame
-import random
+from sprites import *
+from config import *
+import sys
 
 pygame.init()
-
-height,width = 600,800
-window = pygame.display.set_mode((width,height))
-pygame.display.set_caption("Adventure game")
 
 # colors
 WHITE = (255,255,255)
@@ -13,49 +11,95 @@ WHITE = (255,255,255)
 clock = pygame.time.Clock()
 FPS = 60
 
-player_image = pygame.image.load("player.png").convert_alpha()
-bg = pygame.image.load('bg.png').convert()
+window = pygame.display.set_mode((width,height))
+pygame.display.set_caption("Adventure game")
 
-# Player class
-class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, speed):
-        super().__init__()
-        self.image = player_image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.speed = speed
 
-    def update(self, keys):
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= self.speed
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += self.speed
-        if keys[pygame.K_UP]:
-            self.rect.y -= self.speed
-        if keys[pygame.K_DOWN]:
-            self.rect.y += self.speed
+# player_image = pygame.image.load("player.png").convert_alpha()
+# bg = pygame.image.load('bg.png').convert()
 
-player = Player(100, 100, 5)
-all_sprites = pygame.sprite.Group(player)
+
+class Game:
+    def __init__(self):
+        self.screen = pygame.display.set_mode((height,width))
+        self.clock = pygame.time.Clock()
+        # self.font = pygame.font.Font( 32)
+        self.running = True
+
+
+    def new(self):
+            self.playing = True
+            self.all_sprites = pygame.sprite.LayeredUpdates()
+            self.blocks = pygame.sprite.LayeredUpdates()
+            self.enemies = pygame.sprite.LayeredUpdates()
+            self.attacks = pygame.sprite.LayeredUpdates()
+    
+            self.player = Player(self,1,2)
+            self.all_sprites.add(self.player) 
+
+
+#empty functions
+    def events(self):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.playing = False
+                    self.running = False
+
+    def update(self):
+            self.all_sprites.update()
+
+    def draw(self):
+            self.screen.fill(WHITE)
+            self.all_sprites.draw(self.screen)
+            self.clock.tick(FPS)
+            pygame.display.update()
+
+    def main(self):
+            while self.playing:
+                self.events()
+                self.update()
+                self.draw()
+            self.running = False
+
+    def game_over(self):
+            pass
+
+    def intro_screen(self):
+            pass
+
+
+
+g =Game()
+g.intro_screen()
+g.new()
+
+#load backgroud
+# bg = pygame.transform.scale(bg, (width, height))            
+
+# player = Player(100, 100, 5)
+# all_sprites = pygame.sprite.Group(player)
 
 running = True
 while running:
-    clock.tick(FPS)
+    g.main()
+    g.game_over()
+#     clock.tick(FPS)
 
-    # Handle events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+#     # Handle events
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
 
-    # Update player
-    keys = pygame.key.get_pressed()
-    all_sprites.update(keys)
+#     # Update player
+#     keys = pygame.key.get_pressed()
+#     window.blit(bg, (0, 0))
+#     all_sprites.update(keys)
 
-    # Draw everything
-    window.fill(WHITE)
-    all_sprites.draw(window)
-    pygame.display.flip()
+#     # Draw everything
+    
+#     all_sprites.draw(window)
+#     pygame.display.flip()
 
-# Clean up
+# # Clean up
 pygame.quit()
 sys.exit()

@@ -1,0 +1,9 @@
+height,width = 600,800
+
+PLAYER_LAYER = 2
+GROUND_LAYER = 1
+
+TILESIZE = 32
+
+RED = (255,0,0)
+FPS = 60
