@@ -45,7 +45,7 @@ class Game:
                     self.playing = False
                     self.running = False
 
-    def update(self):
+    def update(self,keys):
             self.all_sprites.update()
 
     def draw(self):
