@@ -4,6 +4,7 @@ PLAYER_LAYER = 2
 GROUND_LAYER = 1
 
 TILESIZE = 32
+<<<<<<< HEAD
 PLAYER_SPEED = 3
 
 RED = (255,0,0)
@@ -32,3 +33,8 @@ tilemap = [
 'BBBBBBBBBBBBBBBBBBBB',
 
 ]
+=======
+
+RED = (255,0,0)
+FPS = 60
+>>>>>>> b5182c27920c97b941b371bdb6705ad48a1427bc
